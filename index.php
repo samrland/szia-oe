@@ -228,8 +228,9 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 				class="szia-window-frame" />
 		</div>
 		';
-
-		$template = str_replace('%szia-url%', $appURL, str_replace('%szia-name%', $appName, str_replace('%szia-id%', $id, $template)));
+		$template = str_replace('%szia-id%', $id, $template);
+		$template = str_replace('%szia-name%', $appName, $template);
+		$template = str_replace('%szia-url%', $appURL, $template);
 		echo $template;
 	}
 
