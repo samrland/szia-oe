@@ -1,4 +1,4 @@
-# █▓▒▒░░░ szia ░░░▒▒▓█
+# szia
 
 szia is an online operating environment based on [zlinux](https://zlinux.mkcodes.repl.co).
 
