@@ -4,14 +4,16 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 -->
 
 <title>szia workstation</title>
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<meta charset="UTF-8" />
+<meta name='viewport' content='width=device-width, initial-scale=1' />
+<meta charset='UTF-8' />
 
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
+<script src='https://code.jquery.com/jquery-1.12.4.js'></script>
 <script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
 
-<script>
+<script type='module'>
+	var focusindex = 1;
+
 	const popups = {
 		about: function() {
 			swal('About', 'szia is a project by samrpf to create an online operating environment based on zlinux.\nYou can find zlinux at https://zlinux.mkcodes.repl.co.');
@@ -25,28 +27,78 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 	};
 
 	function updateTime() {
-  		const timeElapsed = Date.now();
-  		const todayObject = new Date(timeElapsed);
-  		const today = todayObject.toUTCString();
-  		document.getElementById("time").innerHTML = today;
+  		const today = new Date(Date.now());
+  		$('#time').innerHTML = today.toUTCString();
 		setTimeout(updateTime, 1000);
 	}
 	
 	updateTime();
+
+	class SziaWindow {
+		constructor(id, name, url) {
+			this.id = id;
+			this.name = name;
+			this.url = url;
+
+			this.showing = false;
+		}
+
+		show() {
+			$('#' + this.id + '-frame').src = this.url;
+			$('#' + this.id + '-window').style.display = 'block';
+			$('#' + this.id + '-button').style.background = '#91c4ed';
+		}
+
+		hide() {
+			$('#' + this.id + '-frame').src = 'about:blank';
+			$('#' + this.id + '-window').style.display = 'none';
+			$('#' + this.id + '-button').style.background = 'transparent';
+		}
+
+		load() {
+			// if window is showing, hide it, else show it again
+			if (this.showing) {
+				this.showing = false;
+				this.hide();
+			} else {
+				this.showing = true;
+				this.show();
+			}
+		}
+
+		focus() {
+    		focusindex += 1;
+    		$('#' + this.id + '-window').style.zindex = focusindex.toString();
+  		}
+	}
+
+	$('.szia-window').draggable();
+	$('.szia-window').resizable();
+	$('.szia-window-button').draggable({cancel: false});
 </script>
 
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
 	
 	body {
-		font-family: 'Roboto', sans-serif;
+		font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 		font-weight: 400;
-		background-image: url('background.jpg');
+		background: url('https://malwarewatch.org/images/backgrounds/background9.jpg');
 		color: white;
 		margin-bottom: -1px;
   		-webkit-background-clip: padding-box; /* for Safari */
   		background-clip: padding-box; /* for IE9+, Firefox 4+, Opera, Chrome */
 		overflow: hidden;
+		margin: 0;
+	}
+
+	#menu {
+		opacity: 90%;
+  		position: absolute;
+		top: 5px;
+		right: 5px;
+		text-align: right;
+		padding-top: 0%;
 	}
 
 	#menu a {
@@ -60,40 +112,26 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 	#menu a:visited {
 		color: white;
 	}
-	
-	#menu {
-  		position: absolute;
-		top: 5px;
-		right: 5px;
-		text-align: right;
-		padding-top: 0%;
-	}
 
 	#menu-title {
 		font-weight: 100;
 		font-size: 40px;
+		margin-top: 1rem;
+		margin-bottom: 1rem;
 	}
 	
 	button {
 		font-size: 13.6px;
 	}
-</style>
 
-<div id="menu">
-	<p id="menu-title">szia</p>
+	iframe {
+    	outline: none;
+    	border: none;
+    	resize: both;
+    	overflow: auto;
+  		position: auto;
+  	}
 
-	<div>
-		<a href="" onclick="popups.about()">about</a>
-		|
-		<a href="" onclick="popups.credits()">credits</a>
-		|
-		<a href="" onclick="popups.license()">license</a>
-	</div>
-	
-	<div id="time">::placeholder::</div>
-</div>
-
-<style>
 	.szia-window {
     	outline: 1px solid white;
 		backdrop-filter: blur(2px);
@@ -110,28 +148,18 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 		max-width: fit-content;
 		filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.2));
   	}
-	
-	iframe {
-    	outline: none;
-    	border: none;
-    	resize: both;
-    	overflow: auto;
-  		position: auto;
-  	}
 
 	.szia-window-button {
 		border: 1px solid rgba(255, 255, 255, 0.7);
   		outline: none;
-    	background-color: transparent;
+    	background: transparent;
   		color: white;
     	position: relative;
 		transition: ease 0.5s;
-		width: 10%;
 	}
 
 	.szia-window-button:hover {
-		width: 20%;
-		background-color: rgba(0, 0, 0, 0.75);
+		background: rgba(0, 0, 0, 0.75);
 	}
 
 	.szia-window-control {
@@ -146,45 +174,25 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 	}
 </style>
 
-<script>
-	class SziaWindow {
-		constructor(id, name, url) {
-			this.id = id;
-			this.name = name;
-			this.url = url;
+<div id='menu'>
+	<p id='menu-title'>szia</p>
 
-			this.showing = false;
-		}
-
-		show() {
-			document.getElementById(this.id + "-frame").src = this.url;
-			document.getElementById(this.id + "-window").style.display = "block";
-			document.getElementById(this.id + "-button").style.background = "#91c4ed";
-		}
-
-		hide() {
-			document.getElementById(this.id + "-frame").src = "about:blank";
-			document.getElementById(this.id + "-window").style.display = "none";
-			document.getElementById(this.id + "-button").style.background = "transparent";
-		}
-
-		load() {
-			// if window is showing, hide it, else show it again
-			if (this.showing) {
-				this.showing = false;
-				this.hide();
-			} else {
-				this.showing = true;
-				this.show();
-			}
-		}
-	}
-</script>
+	<div>
+		<a href onclick='popups.about()'>about</a>
+		|
+		<a href onclick='popups.credits()'>credits</a>
+		|
+		<a href onclick='popups.license()'>license</a>
+	</div>
+	
+	<div id='time'>::placeholder::</div>
+</div>
 
 <?php
-	$szia_script = '
-		<script>
+	$szia_template = '
+		<script type="module">
 			let %szia-id% = new SziaWindow("%szia-id%", "%szia-name%", "%szia-url%");
+		    %szia-id%.hide();
 		</script>
 
 		<button
@@ -199,7 +207,8 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 
 		<div
 		  	id="%szia-id%-window"
-		  	class="ui-widget-content szia-window">
+		  	class="ui-widget-content szia-window"
+			onclick="%szia-id%.focus()">
 
 		  	<span>%szia-name%</span>
 
@@ -214,28 +223,15 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 				src="about:blank"
 				class="szia-window-frame" />
 		</div>
-
-		<script>
-		    %szia-id%.hide();
-		</script>
 	';
 
 	function add($id, $appName, $appURL, $scriptFormat) {
-		$add_script = str_replace("%szia-id%", $id, $scriptFormat);
-		$add_script = str_replace("%szia-name%", $appName, $add_script);
-		$add_script = str_replace("%szia-url%", $appURL, $add_script);
-
+		$add_script = str_replace('%szia-url%', $appURL, str_replace('$szia-name', $appName, str_replace('%szia-id%', $id, $scriptFormat)));
 		echo $add_script;
 	}
 
-	add('https://bing.com', 'Bing', 'bingapp', $szia_script);
-	add('browser/browser.html', 'Browser', 'wbr', $szia_script);
-	add('notes/notes.html', 'Notes', 'noteapp', $szia_script);
-	add('helpapp/helpapp.html', 'Help', 'helpapp', $szia_script);
+	add('bingapp', 'Bing', 'https://bing.com', $szia_template);
+	add('wbr', 'Browser', 'browser/browser.html', $szia_template);
+	add('noteapp', 'Notes', 'notes/notes.html', $szia_template);
+	add('helpapp', 'Help', 'helpapp/helpapp.html', $szia_template);
 ?>
-
-<script>
-	$('.szia-window').draggable();
-	$('.szia-window').resizable();
-	$('.szia-window-button').draggable({cancel: false});
-</script>
