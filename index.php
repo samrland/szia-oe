@@ -7,9 +7,9 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 <meta name='viewport' content='width=device-width, initial-scale=1' />
 <meta charset='UTF-8' />
 
-<script src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
-<script src='https://code.jquery.com/jquery-1.12.4.js'></script>
-<script src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
+<script defer src='https://unpkg.com/sweetalert/dist/sweetalert.min.js'></script>
+<script defer src='https://code.jquery.com/jquery-1.12.4.js'></script>
+<script defer src='https://code.jquery.com/ui/1.12.1/jquery-ui.js'></script>
 
 <script type='module'>
 	var focusindex = 1;
@@ -80,6 +80,10 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 <style>
 	@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
 	
+	* {
+		user-select: none;
+	}
+
 	body {
 		font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 		font-weight: 400;
@@ -226,7 +230,7 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 	';
 
 	function add($id, $appName, $appURL, $scriptFormat) {
-		$add_script = str_replace('%szia-url%', $appURL, str_replace('$szia-name', $appName, str_replace('%szia-id%', $id, $scriptFormat)));
+		$add_script = str_replace('%szia-url%', $appURL, str_replace('%szia-name%', $appName, str_replace('%szia-id%', $id, $scriptFormat)));
 		echo $add_script;
 	}
 
