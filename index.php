@@ -126,6 +126,7 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 	
 	button {
 		font-size: 13.6px;
+		font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
 	}
 
 	iframe {
@@ -142,15 +143,13 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
     	position: absolute;
     	top: 0;
     	left: 50%;
-		width: 500px;
-		height: 500px;
-		min-height: 100px;
-		min-width: 100px;
+		min-height: 150px;
+		min-width: 250px;
 		resize: both;
 		overflow: auto;
 		max-height: fit-content;
 		max-width: fit-content;
-		filter: drop-shadow(5px 5px 4px rgba(0, 0, 0, 0.2));
+		filter: drop-shadow(4px 10px 4px rgba(0, 0, 0, 25%));
   	}
 
 	.szia-window-button {
