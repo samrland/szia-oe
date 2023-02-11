@@ -192,7 +192,8 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 </div>
 
 <?php
-	$szia_template = '
+	function add($id, $appName, $appURL) {
+		$template = '
 		<script type="module">
 			let %szia-id% = new SziaWindow("%szia-id%", "%szia-name%", "%szia-url%");
 		    %szia-id%.hide();
@@ -226,15 +227,14 @@ Copyright (c) 2023 samrpf. See the LICENSE file for more information.
 				src="about:blank"
 				class="szia-window-frame" />
 		</div>
-	';
+		';
 
-	function add($id, $appName, $appURL, $scriptFormat) {
-		$add_script = str_replace('%szia-url%', $appURL, str_replace('%szia-name%', $appName, str_replace('%szia-id%', $id, $scriptFormat)));
-		echo $add_script;
+		$template = str_replace('%szia-url%', $appURL, str_replace('%szia-name%', $appName, str_replace('%szia-id%', $id, $template)));
+		echo $template;
 	}
 
-	add('bingapp', 'Bing', 'https://bing.com', $szia_template);
-	add('wbr', 'Browser', 'browser/browser.html', $szia_template);
-	add('noteapp', 'Notes', 'notes/notes.html', $szia_template);
-	add('helpapp', 'Help', 'helpapp/helpapp.html', $szia_template);
+	add('bingapp', 'Bing', 'https://bing.com');
+	add('wbr', 'Browser', 'browser/browser.html');
+	add('noteapp', 'Notes', 'notes/notes.html');
+	add('helpapp', 'Help', 'helpapp/helpapp.html');
 ?>
