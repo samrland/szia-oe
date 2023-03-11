@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@100;400&display=swap');
+
+* {
+    user-select: none;
+}
+
+body {
+    font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+    font-weight: 400;
+    background: url('https://malwarewatch.org/images/backgrounds/background9.jpg');
+    color: white;
+    margin-bottom: -1px;
+    -webkit-background-clip: padding-box;
+    /* for Safari */
+    background-clip: padding-box;
+    /* for IE9+, Firefox 4+, Opera, Chrome */
+    overflow: hidden;
+    margin: 0;
+}
+
+#menu {
+    opacity: 90%;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    text-align: right;
+    padding-top: 0%;
+}
+
+#menu a {
+    color: white;
+}
+
+#menu a:hover {
+    color: white;
+}
+
+#menu a:visited {
+    color: white;
+}
+
+#menu-title {
+    font-weight: 100;
+    font-size: 40px;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+button {
+    font-size: 13.6px;
+    font-family: 'Roboto', 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+}
+
+iframe {
+    outline: none;
+    border: none;
+    resize: both;
+    overflow: auto;
+    position: auto;
+}
+
+.szia-window {
+    outline: 1px solid white;
+    backdrop-filter: blur(2px);
+    position: absolute;
+    top: 0;
+    left: 50%;
+    min-height: 150px;
+    min-width: 250px;
+    resize: both;
+    overflow: auto;
+    max-height: fit-content;
+    max-width: fit-content;
+    filter: drop-shadow(4px 10px 4px rgba(0, 0, 0, 25%));
+}
+
+.szia-window-button {
+    border: 1px solid rgba(255, 255, 255, 0.7);
+    outline: none;
+    background: transparent;
+    color: white;
+    position: relative;
+    transition: ease 0.5s;
+}
+
+.szia-window-button:hover {
+    background: rgba(0, 0, 0, 0.75);
+}
+
+.szia-window-control {
+    position: absolute;
+    right: 0;
+    font-family: 'Consolas', 'Courier New', monospace;
+}
+
+.szia-window-frame {
+    width: 100%;
+    height: 100%;
+}
