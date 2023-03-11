@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<style>
+	* {
+		outline: none;
+		border: none;
+	}
+
+	body {
+		background: white;
+	}
+
+	#textbox, #gobutton {
+		background: darkslategrey;
+		color: white;
+	}
+
+	#frame {
+		width: 100%;
+		height: 100%;
+	}
+
+	#textbox {
+		width: 45%;
+	}
+</style>
+
+<script>
+	// used to change the url
+	function urlChange(proxy, domain) {
+  		let url = proxy + domain;
+  		document.getElementById('frame').src = url;
+	}
+	// used to figure out the full url before using urlChange() to change the site
+	function goPage() {
+		let fullUrl = document.getElementById('textbox').value;
+		// split the url by the substring '://' to seperate the proxy from the domain
+		let splitUrl = fullUrl.split('://');
+		if (splitUrl[0] != 'https' || splitUrl[0] != 'https') {
+			// if there is no defined proxy, set the default proxy to https and use the inputted text as the domain
+			var proxy = 'https://';
+			var domain = splitUrl[0];
+		} else {
+			// always use https
+			if (splitUrl[0] == 'http') {
+				var proxy = '';
+				var domain = 'mixedcontent.html';
+			} else {
+				var proxy = 'https://';
+				var domain = splitUrl[1];
+			}
+		}
+
+		// check if the user is trying to do something they shouldn't
+		if (domain == 'szia.samrcode.repl.co' || domain == 'zlinux.mkcodes.repl.co') {
+			urlChange('', 'meta.html');
+		} else {
+			urlChange(proxy, domain);	
+		}
+	}
+</script>
+
+<input placeholder="about:blank" type="textbox" id="textbox" />
+<button type="button" id="gobutton" onclick="goPage();">go</button>
+<br/>
+<iframe id="frame" src="about:blank" />
